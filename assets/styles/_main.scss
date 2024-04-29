@@ -1,0 +1,23 @@
+body,
+html {
+	background: $bg;
+	color: $text;
+
+	font-family: 'Lato';
+	font-size: 18px;
+}
+
+.infos {
+	font-size: 14px;
+	color: $infos;
+}
+
+input {
+	color: $text;
+}
+
+// .icon {
+// 	aspect-ratio: 1;
+// 	width: 18px;
+// 	height: 18px;
+// }
