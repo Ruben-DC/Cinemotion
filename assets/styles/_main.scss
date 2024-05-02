@@ -1,14 +1,18 @@
-body,
-html {
+html,
+body {
 	background: $bg;
 	color: $text;
 
 	font-family: 'Lato';
-	font-size: 18px;
+	font-size: 10px;
+}
+
+body {
+	font-size: 1.8rem;
 }
 
 .infos {
-	font-size: 14px;
+	font-size: 1.4rem;
 	color: $infos;
 }
 

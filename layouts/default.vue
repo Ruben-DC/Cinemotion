@@ -24,7 +24,7 @@
 </script>
 
 <template>
-	<div>
+	<div class="default-template">
 		<header>
 			<h1 class="logo">
 				<NuxtImg class="icon" src="/popcorn.png" />
@@ -87,7 +87,8 @@
 
 <style lang="scss" scoped>
 	header {
-		position: sticky;
+		z-index: 1000;
+		position: fixed;
 		top: 0;
 		left: 0;
 
@@ -101,6 +102,7 @@
 
 		background: #00000010;
 		backdrop-filter: blur(40px);
+		font-size: 1.6rem;
 
 		.logo {
 			display: flex;
@@ -109,7 +111,7 @@
 
 			font-family: 'Playfair Display';
 			font-weight: 500;
-			font-size: 26px;
+			font-size: 2.6rem;
 
 			.icon {
 				aspect-ratio: 1/1;
