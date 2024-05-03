@@ -30,20 +30,11 @@
 			align-items: center;
 
 			width: 100%;
-			max-width: 700px;
-			// height: 60px;
-
-			border-radius: 15px;
-
-			background: $bg-2;
-
-			&:hover {
-			}
 		}
 
 		&__input {
 			width: 100%;
-			height: 100%;
+			height: 65px;
 
 			padding: 20px 20px 20px 30px;
 
@@ -51,6 +42,20 @@
 			border-radius: 15px;
 
 			background: $bg;
+
+			&:hover {
+				border: solid 5px $bg-2;
+				border-radius: 20px;
+
+				transition: border 0.1s ease-in-out;
+			}
+
+			&:focus {
+				border: solid 5px $bg-2;
+				border-radius: 20px;
+
+				transition: border 0.1s ease-in-out;
+			}
 		}
 	}
 </style>
