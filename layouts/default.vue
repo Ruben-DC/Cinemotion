@@ -133,6 +133,10 @@
 	}
 
 	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
 		width: 100%;
 		min-height: 100vh;
 	}
@@ -143,6 +147,7 @@
 
 		width: 100%;
 		padding: 30px 50px;
+		margin-top: 200px;
 
 		border-top: solid 1px $strokes;
 
