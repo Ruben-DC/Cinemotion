@@ -1,4 +1,5 @@
 import { RawDatas, MediaInfos, Movie, TV } from '~/types';
+import { formatMedias, formatMediasArray } from '~/utils/format';
 
 export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig(event);
@@ -38,28 +39,16 @@ export default defineEventHandler(async (event) => {
 
 		if (routes[apiRoute as RouteKey] === 'movie/discover') {
 			const getRandomIndex = (max: number) =>
-				Math.round(Math.random() * max);
+				Math.floor(Math.random() * max);
 
-			let discover: Movie | undefined = (data.results as Movie[]).at(
-				getRandomIndex(30)
-			);
+			let discover: Movie = (data.results as Movie[])[
+				getRandomIndex(data.results.length)
+			];
 
-			return discover;
+			return formatMedias(discover);
 		} else {
-			let medias: MediaInfos[] = (data.results as (Movie | TV)[]).map(
-				(media: Movie | TV) => ({
-					id: media.id,
-					title: (media as Movie).title || (media as TV).name,
-					genre_ids: media.genre_ids,
-					overview: media.overview,
-					poster_path: media.poster_path,
-					backdrop_path: media.backdrop_path,
-					vote_average: media.vote_average,
-					vote_count: media.vote_count,
-					release_date:
-						(media as Movie).release_date ||
-						(media as TV).first_air_date,
-				})
+			let medias: MediaInfos[] = formatMediasArray(
+				data.results as (Movie | TV)[]
 			);
 
 			return medias;
