@@ -1,16 +1,28 @@
 <script setup lang="ts">
 	import type { MediaInfos } from '~/types';
 
-	const movies: Ref<MediaInfos[]> = ref([]);
+	// const { data: discover, pending }: { data: MediaInfos[] } = await useFetch(
+	// 	'/api/tmdb/movie/discover',
+	// 	{
+	// 		lazy: true,
+	// 	}
+	// );
 
-	const fetchMovies = async () => {
-		const { data } = await useFetch('/api/tmdb/movie/intheatres', {
+	// console.log(discover);
+
+	const { data: tvs }: { data: MediaInfos[] } = await useFetch(
+		'/api/tmdb/tv/airing',
+		{
 			lazy: true,
-		});
+		}
+	);
 
-		return data.value;
-	};
-	movies.value = await fetchMovies();
+	const { data: movies }: { data: MediaInfos[] } = await useFetch(
+		'/api/tmdb/movie/intheatres',
+		{
+			lazy: true,
+		}
+	);
 </script>
 
 <template>
@@ -25,41 +37,29 @@
 		<SearchBar class="search-bar" />
 
 		<div class="suggestions">
-			<!-- <div class="suggestions__category">
-				<div class="suggestions__category__header">
-					<h2 class="suggestions__category__name">
-						<Icon name="lucide:flame" /> Populaires
-					</h2>
-					<hr class="divider" />
-					<NuxtLink to="/" class="link">voir plus</NuxtLink>
-				</div>
-
-				<ul class="suggestions__list">
-					<li v-if="popular" v-for="media in popular" :key="media.id">
-						<MediaCard :media="media" />
-					</li>
-				</ul>
-			</div>
-
 			<div class="suggestions__category">
 				<h2 class="suggestions__category__name">
 					<Icon name="lucide:tv" /> Séries
 				</h2>
 
 				<ul class="suggestions__list">
-					<li v-if="tvs" v-for="tv in tvs" :key="tv.id">
+					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
 						<MediaCard :media="tv" />
 					</li>
 				</ul>
 			</div>
--->
+
 			<div class="suggestions__category">
 				<h2 class="suggestions__category__name">
 					<Icon name="lucide:clapperboard" /> Films
 				</h2>
 
 				<ul class="suggestions__list">
-					<li v-if="movies" v-for="movie in movies" :key="movie.id">
+					<li
+						v-if="movies"
+						v-for="movie in movies.slice(0, 10)"
+						:key="movie.id"
+					>
 						<MediaCard :media="movie" />
 					</li>
 				</ul>
@@ -79,7 +79,7 @@
 			width: 100%;
 			height: 100%;
 
-			background: url(https://www.syfy.com/sites/syfy/files/2022/07/untitled-1_9.jpg;);
+			// background: url(https://www.syfy.com/sites/syfy/files/2022/07/untitled-1_9.jpg;);
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: center;
@@ -158,10 +158,9 @@
 		}
 
 		&__list {
-			display: flex;
-			justify-content: center;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 			gap: 30px;
-			flex-wrap: wrap;
 
 			width: 100%;
 		}
