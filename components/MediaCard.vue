@@ -16,6 +16,7 @@
 <template>
 	<div class="media-card">
 		<NuxtImg
+			v-if="poster"
 			class="media__poster"
 			:src="poster"
 			format="webp"
@@ -28,10 +29,10 @@
 		<div class="media__infos">
 			<p class="media__release">{{ media.release_date }}</p>
 
-			<!-- <p class="media__runtime">
-				<span class="dot"></span>
-				{{ media }} 
-			</p> -->
+			<p class="media__runtime" v-if="media.vote_average">
+				<Icon name="lucide:star" style="color: yellow" />
+				{{ Math.round(media.vote_average) }}
+			</p>
 		</div>
 	</div>
 </template>
@@ -47,8 +48,6 @@
 		}
 
 		&__poster {
-			// aspect-ratio: 150/200;
-			// width: 100%;
 			object-fit: cover;
 			border-radius: 15px;
 		}
