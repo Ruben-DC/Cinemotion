@@ -1,4 +1,4 @@
-import { RawDatas, MediaInfos, Movie, TV } from '~/types';
+import { RawDatas, Movie, TV } from '~/types';
 import { formatMedias, formatMediasArray } from '~/utils/format';
 
 export default defineEventHandler(async (event) => {
