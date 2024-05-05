@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
 			}
 		);
 
-		if (routes[apiRoute as RouteKey] === 'movie/discover') {
+		if ((apiRoute as RouteKey) == 'movie/discover') {
 			const getRandomIndex = (max: number) =>
 				Math.floor(Math.random() * max);
 
@@ -47,11 +47,7 @@ export default defineEventHandler(async (event) => {
 
 			return formatMedias(discover);
 		} else {
-			let medias: MediaInfos[] = formatMediasArray(
-				data.results as (Movie | TV)[]
-			);
-
-			return medias;
+			return formatMediasArray(data.results as (Movie | TV)[]);
 		}
 	} else {
 		return `${apiRoute} not found`;
