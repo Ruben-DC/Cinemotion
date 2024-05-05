@@ -1,23 +1,30 @@
 <script setup lang="ts">
 	import type { MediaInfos } from '~/types';
 
-	// const { data: discover, pending }: { data: MediaInfos[] } = await useFetch(
-	// 	'/api/tmdb/movie/discover',
-	// 	{
-	// 		lazy: true,
-	// 	}
-	// );
+	const { data: discover }: { data: Ref<MediaInfos> } = await useFetch(
+		'/api/tmdb/movie/discover',
+		{
+			lazy: true,
+		}
+	);
 
-	// console.log(discover);
+	let { data: backdrop }: { data: Ref<string> } = await useFetch(
+		`/api/tmdb/img/${discover.value.backdrop_path}`,
+		{
+			lazy: true,
+		}
+	);
 
-	const { data: tvs }: { data: MediaInfos[] } = await useFetch(
+	console.log(backdrop.value);
+
+	const { data: tvs }: { data: Ref<MediaInfos[]> } = await useFetch(
 		'/api/tmdb/tv/airing',
 		{
 			lazy: true,
 		}
 	);
 
-	const { data: movies }: { data: MediaInfos[] } = await useFetch(
+	const { data: movies }: { data: Ref<MediaInfos[]> } = await useFetch(
 		'/api/tmdb/movie/intheatres',
 		{
 			lazy: true,
@@ -27,9 +34,25 @@
 
 <template>
 	<div class="discover">
-		<div class="discover__image"></div>
+		<div
+			v-if="backdrop"
+			:style="`background: url(${backdrop}); 
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: center;`"
+			class="discover__image"
+		></div>
+		<!-- <NuxtImg
+			v-if="backdrop"
+			class="discover__backdrop"
+			:src="backdrop"
+			format="webp"
+		/> -->
+
 		<h1 class="discover__title">
-			<NuxtLink to="/"> Oppenheimer </NuxtLink>
+			<NuxtLink :to="`/movie/${discover.id}`">
+				{{ discover.title }}
+			</NuxtLink>
 		</h1>
 	</div>
 
@@ -79,10 +102,20 @@
 			width: 100%;
 			height: 100%;
 
-			// background: url(https://www.syfy.com/sites/syfy/files/2022/07/untitled-1_9.jpg;);
+			// background: url(https://image.tmdb.org/t/p/original//2KGxQFV9Wp1MshPBf8BuqWUgVAz.jpg);
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: center;
+
+			opacity: 0.9;
+			box-shadow: inset 0 -450px 170px -200px #000000;
+		}
+
+		&__backdrop {
+			width: 100%;
+			height: 100%;
+
+			object-fit: cover;
 
 			opacity: 0.9;
 			box-shadow: inset 0 -450px 170px -200px #000000;
