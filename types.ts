@@ -101,6 +101,8 @@ export type MediaInfos = {
 	release_date: string;
 	runtime?: number;
 	count_of_seasons?: number;
+
+	mediaType?: 'tv' | 'movie';
 };
 
 export type Movie = {
