@@ -7,6 +7,10 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		tmdbApiKey: process.env.TMDB_API_KEY,
+
+		public: {
+			baseUrl: process.env.BASE_URL,
+		},
 	},
 
 	devtools: { enabled: true },
