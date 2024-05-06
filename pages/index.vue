@@ -2,7 +2,7 @@
 	import type { MediaInfos } from '~/types';
 
 	const { data: discover }: { data: Ref<MediaInfos> } = await useFetch(
-		'/api/tmdb/movie/discover',
+		'/api/tmdb/discover',
 		{
 			lazy: true,
 		}
@@ -15,17 +15,15 @@
 		}
 	);
 
-	console.log(backdrop.value);
-
 	const { data: tvs }: { data: Ref<MediaInfos[]> } = await useFetch(
-		'/api/tmdb/tv/airing',
+		'/api/tmdb/tv/list/airing',
 		{
 			lazy: true,
 		}
 	);
 
 	const { data: movies }: { data: Ref<MediaInfos[]> } = await useFetch(
-		'/api/tmdb/movie/intheatres',
+		'/api/tmdb/movie/list/intheatres',
 		{
 			lazy: true,
 		}
@@ -50,8 +48,9 @@
 		/> -->
 
 		<h1 class="discover__title">
-			<NuxtLink :to="`/movie/${discover.id}`">
+			<NuxtLink :to="`/${discover.mediaType}/${discover.id}`">
 				{{ discover.title }}
+				<Icon class="discover__title__icon" name="lucide:info" />
 			</NuxtLink>
 		</h1>
 	</div>
@@ -67,7 +66,9 @@
 
 				<ul class="suggestions__list">
 					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
-						<MediaCard :media="tv" />
+						<NuxtLink :to="`/tv/${tv.id}`">
+							<MediaCard :media="tv" />
+						</NuxtLink>
 					</li>
 				</ul>
 			</div>
@@ -83,7 +84,9 @@
 						v-for="movie in movies.slice(0, 10)"
 						:key="movie.id"
 					>
-						<MediaCard :media="movie" />
+						<NuxtLink :to="`/movie/${movie.id}`">
+							<MediaCard :media="movie" />
+						</NuxtLink>
 					</li>
 				</ul>
 			</div>
@@ -102,12 +105,6 @@
 			width: 100%;
 			height: 100%;
 
-			// background: url(https://image.tmdb.org/t/p/original//2KGxQFV9Wp1MshPBf8BuqWUgVAz.jpg);
-			background-repeat: no-repeat;
-			background-size: cover;
-			background-position: center;
-
-			opacity: 0.9;
 			box-shadow: inset 0 -450px 170px -200px #000000;
 		}
 
@@ -130,6 +127,14 @@
 			font-family: 'Playfair Display';
 			font-weight: 400;
 			font-size: 4.8rem;
+
+			&__icon {
+				position: relative;
+				top: 0px;
+				right: 0px;
+
+				height: 2rem;
+			}
 		}
 	}
 
