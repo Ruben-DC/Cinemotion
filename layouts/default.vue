@@ -25,7 +25,8 @@
 
 <template>
 	<div class="default-template">
-		<header>
+		<div class="header__shadow"></div>
+		<header class="header">
 			<h1 class="logo">
 				<NuxtImg class="icon" src="/popcorn.png" />
 
@@ -86,7 +87,19 @@
 </template>
 
 <style lang="scss" scoped>
-	header {
+	.header {
+		&__shadow {
+			z-index: 999;
+			top: -300px;
+			left: -50%;
+
+			position: fixed;
+			width: 200%;
+			height: 300px;
+			background: #000000;
+			box-shadow: 0 150px 200px #000000;
+		}
+
 		z-index: 1000;
 		position: fixed;
 		top: 0;
@@ -100,8 +113,8 @@
 		width: 100%;
 		padding: 30px 50px;
 
-		background: #00000010;
-		backdrop-filter: blur(40px);
+		// background: #00000010;
+		// backdrop-filter: blur(40px);
 		font-size: 1.6rem;
 
 		.logo {
