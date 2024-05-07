@@ -30,12 +30,12 @@
 			<h1 class="logo">
 				<NuxtImg class="icon" src="/popcorn.png" />
 
-				Cinémotion
+				Cinemotion
 			</h1>
 
 			<nav class="nav">
 				<NuxtLink class="nav__link" to="/" v-for="link in links">
-					<Icon :name="link.iconName" />
+					<!-- <Icon :name="link.iconName" /> -->
 
 					{{ link.name }}
 				</NuxtLink>
