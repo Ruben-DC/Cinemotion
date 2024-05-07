@@ -1,12 +1,12 @@
 <script setup lang="ts">
 	import type { MediaInfos } from '~/types';
 
-	const { data: discover }: { data: Ref<MediaInfos> } = await useFetch(
-		'/api/tmdb/discover',
-		{
-			lazy: true,
-		}
-	);
+	const {
+		data: discover,
+	}: // pending: discoverPending,
+	{ data: Ref<MediaInfos> } = await useFetch('/api/tmdb/discover', {
+		lazy: true,
+	});
 
 	let { data: backdrop }: { data: Ref<string> } = await useFetch(
 		`/api/tmdb/img/${discover.value.backdrop_path}`,
@@ -31,6 +31,7 @@
 </script>
 
 <template>
+	<!-- <div v-if="discoverPending">pending</div> -->
 	<div class="discover">
 		<div
 			v-if="backdrop"
@@ -40,12 +41,6 @@
 			background-position: center;`"
 			class="discover__image"
 		></div>
-		<!-- <NuxtImg
-			v-if="backdrop"
-			class="discover__backdrop"
-			:src="backdrop"
-			format="webp"
-		/> -->
 
 		<h1 class="discover__title">
 			<NuxtLink :to="`/${discover.mediaType}/${discover.id}`">
@@ -60,9 +55,16 @@
 
 		<div class="suggestions">
 			<div class="suggestions__category">
-				<h2 class="suggestions__category__name">
-					<Icon name="lucide:tv" /> Séries
-				</h2>
+				<div class="suggestions__category__header">
+					<h2 class="name">
+						<!-- <Icon name="lucide:tv" />  -->
+						Séries
+					</h2>
+
+					<hr class="divider" />
+
+					<NuxtLink to="/" class="link">voir plus</NuxtLink>
+				</div>
 
 				<ul class="suggestions__list">
 					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
@@ -74,9 +76,16 @@
 			</div>
 
 			<div class="suggestions__category">
-				<h2 class="suggestions__category__name">
-					<Icon name="lucide:clapperboard" /> Films
-				</h2>
+				<div class="suggestions__category__header">
+					<h2 class="name">
+						<!-- <Icon name="lucide:clapperboard" /> -->
+						Films
+					</h2>
+
+					<hr class="divider" />
+
+					<NuxtLink to="/" class="link">voir plus</NuxtLink>
+				</div>
 
 				<ul class="suggestions__list">
 					<li
@@ -170,6 +179,16 @@
 				display: flex;
 				gap: 30px;
 				align-items: center;
+				justify-content: space-between;
+
+				.name {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+
+					font-size: 2.2rem;
+					font-weight: 400;
+				}
 
 				.divider {
 					display: block;
@@ -183,15 +202,6 @@
 					font-size: 1.4rem;
 					text-wrap: nowrap;
 				}
-			}
-
-			&__name {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-
-				font-size: 2.2rem;
-				font-weight: 400;
 			}
 		}
 
