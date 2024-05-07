@@ -10,6 +10,7 @@ export default defineNuxtConfig({
 
 		public: {
 			baseUrl: process.env.BASE_URL,
+			imageBaseUrl: process.env.IMAGE_BASE_URL,
 		},
 	},
 
