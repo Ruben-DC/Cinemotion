@@ -14,6 +14,14 @@ export default defineNuxtConfig({
 	},
 
 	devtools: { enabled: true },
+
+	app: {
+		head: {
+			link: [{ rel: 'icon', type: 'image/png', href: '/popcorn.png' }],
+			title: 'Cinemotion',
+		},
+	},
+
 	modules: [
 		'@nuxt/image',
 		'@vueuse/nuxt',
