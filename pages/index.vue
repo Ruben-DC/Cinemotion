@@ -1,22 +1,8 @@
 <script setup lang="ts">
 	import type { MediaInfos } from '~/types';
 
-	const {
-		data: discover,
-	}: // pending: discoverPending,
-	{ data: Ref<MediaInfos> } = await useFetch('/api/tmdb/discover', {
-		lazy: true,
-	});
-
-	let { data: backdrop }: { data: Ref<string> } = await useFetch(
-		`/api/tmdb/img/${discover.value.backdrop_path}`,
-		{
-			lazy: true,
-		}
-	);
-
-	const { data: tvs }: { data: Ref<MediaInfos[]> } = await useFetch(
-		'/api/tmdb/tv/list/airing',
+	const { data: discover }: { data: Ref<MediaInfos> } = await useFetch(
+		'/api/tmdb/discover',
 		{
 			lazy: true,
 		}
@@ -28,53 +14,39 @@
 			lazy: true,
 		}
 	);
+
+	const { data: tvs }: { data: Ref<MediaInfos[]> } = await useFetch(
+		'/api/tmdb/tv/list/airing',
+		{
+			lazy: true,
+		}
+	);
 </script>
 
 <template>
-	<!-- <div v-if="discoverPending">pending</div> -->
 	<div class="discover">
 		<div
-			v-if="backdrop"
-			:style="`background: url(${backdrop}); 
+			v-if="discover?.backdrop_path"
+			:style="`background: url(${$config.public.imageBaseUrl}/${discover.backdrop_path}); 
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: center;`"
 			class="discover__image"
 		></div>
 
-		<h1 class="discover__title">
-			<NuxtLink :to="`/${discover.mediaType}/${discover.id}`">
+		<NuxtLink :to="`/${discover?.mediaType}/${discover.id}`">
+			<h1 class="discover__title">
 				{{ discover.title }}
+
 				<Icon class="discover__title__icon" name="lucide:info" />
-			</NuxtLink>
-		</h1>
+			</h1>
+		</NuxtLink>
 	</div>
 
 	<div class="content">
 		<SearchBar class="search-bar" />
 
 		<div class="suggestions">
-			<div class="suggestions__category">
-				<div class="suggestions__category__header">
-					<h2 class="name">
-						<!-- <Icon name="lucide:tv" />  -->
-						Séries
-					</h2>
-
-					<hr class="divider" />
-
-					<NuxtLink to="/" class="link">voir plus</NuxtLink>
-				</div>
-
-				<ul class="suggestions__list">
-					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
-						<NuxtLink :to="`/tv/${tv.id}`">
-							<MediaCard :media="tv" />
-						</NuxtLink>
-					</li>
-				</ul>
-			</div>
-
 			<div class="suggestions__category">
 				<div class="suggestions__category__header">
 					<h2 class="name">
@@ -95,6 +67,27 @@
 					>
 						<NuxtLink :to="`/movie/${movie.id}`">
 							<MediaCard :media="movie" />
+						</NuxtLink>
+					</li>
+				</ul>
+			</div>
+
+			<div class="suggestions__category">
+				<div class="suggestions__category__header">
+					<h2 class="name">
+						<!-- <Icon name="lucide:tv" />  -->
+						Séries
+					</h2>
+
+					<hr class="divider" />
+
+					<NuxtLink to="/" class="link">voir plus</NuxtLink>
+				</div>
+
+				<ul class="suggestions__list">
+					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
+						<NuxtLink :to="`/tv/${tv.id}`">
+							<MediaCard :media="tv" />
 						</NuxtLink>
 					</li>
 				</ul>
@@ -142,7 +135,8 @@
 				top: 0px;
 				right: 0px;
 
-				height: 2rem;
+				height: 1.5rem;
+				margin-bottom: 15px;
 			}
 		}
 	}

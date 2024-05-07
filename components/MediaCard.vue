@@ -4,21 +4,14 @@
 	const props = defineProps<{
 		media: MediaInfos;
 	}>();
-
-	let { data: poster } = await useFetch(
-		`/api/tmdb/img/${props.media.poster_path}`,
-		{
-			lazy: true,
-		}
-	);
 </script>
 
 <template>
 	<div class="media-card">
 		<NuxtImg
-			v-if="poster"
+			v-if="media.poster_path"
 			class="media__poster"
-			:src="poster"
+			:src="`${$config.public.imageBaseUrl}/${media.poster_path}`"
 			format="webp"
 			width="150"
 			height="200"
