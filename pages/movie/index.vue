@@ -36,8 +36,6 @@
 		</NuxtLink>
 
 		<h2 class="page-title">Films</h2>
-
-		<SearchBar />
 	</div>
 
 	<div class="suggestions">
@@ -58,6 +56,7 @@
 					:height="200"
 					v-if="pendingIntheatres"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
@@ -78,9 +77,9 @@
 
 				<hr class="divider" />
 
-				<NuxtLink to="/tv/list/popular?page=1" class="link"
-					>voir plus</NuxtLink
-				>
+				<NuxtLink to="/movie/list/popular?page=1" class="link">
+					voir plus
+				</NuxtLink>
 			</div>
 
 			<ul class="suggestions__list">
@@ -89,6 +88,7 @@
 					:height="200"
 					v-if="pendingPopular"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
@@ -96,7 +96,7 @@
 					v-for="media in popular?.results.slice(0, 10)"
 					:key="media.id"
 				>
-					<NuxtLink :to="`/tv/${media.id}`">
+					<NuxtLink :to="`/movie/${media.id}`">
 						<MediaCard :media="media" />
 					</NuxtLink>
 				</li>
@@ -109,7 +109,9 @@
 
 				<hr class="divider" />
 
-				<NuxtLink to="/tv" class="link">voir plus</NuxtLink>
+				<NuxtLink to="/movie/list/upcoming?page=1" class="link">
+					voir plus
+				</NuxtLink>
 			</div>
 
 			<ul class="suggestions__list">
@@ -118,6 +120,7 @@
 					:height="200"
 					v-if="pendingUpcoming"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
@@ -125,7 +128,7 @@
 					v-for="media in upcoming?.results.slice(0, 10)"
 					:key="media.id"
 				>
-					<NuxtLink :to="`/tv/${media.id}`">
+					<NuxtLink :to="`/movie/${media.id}`">
 						<MediaCard :media="media" />
 					</NuxtLink>
 				</li>
@@ -138,7 +141,9 @@
 
 				<hr class="divider" />
 
-				<NuxtLink to="/tv" class="link">voir plus</NuxtLink>
+				<NuxtLink to="/movie/list/top?page=1" class="link">
+					voir plus
+				</NuxtLink>
 			</div>
 
 			<ul class="suggestions__list">
@@ -147,6 +152,7 @@
 					:height="200"
 					v-if="pendingTop"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
@@ -154,7 +160,7 @@
 					v-for="media in top?.results.slice(0, 10)"
 					:key="media.id"
 				>
-					<NuxtLink :to="`/tv/${media.id}`">
+					<NuxtLink :to="`/movie/${media.id}`">
 						<MediaCard :media="media" />
 					</NuxtLink>
 				</li>
