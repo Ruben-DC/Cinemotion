@@ -8,13 +8,12 @@
 
 <template>
 	<div class="media-card">
-		<NuxtImg
+		<CardTilt
 			v-if="media.poster_path"
 			class="media__poster"
-			:src="`${$config.public.imageBaseUrl}/${media.poster_path}`"
-			format="webp"
-			width="150"
-			height="200"
+			:poster="`${$config.public.imageBaseUrl}/${media.poster_path}`"
+			:width="150"
+			:height="200"
 		/>
 
 		<h3 class="media__title">{{ media.title }}</h3>
@@ -38,6 +37,12 @@
 			gap: 5px;
 
 			width: 150px;
+
+			transition: scale 0.15s;
+
+			&:hover {
+				scale: 1.05;
+			}
 		}
 
 		&__poster {
