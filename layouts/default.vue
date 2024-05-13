@@ -6,37 +6,47 @@
 			name: 'Accueil',
 		},
 		{
-			href: '/',
-			iconName: 'lucide:lightbulb',
-			name: 'Découvrir',
-		},
-		{
-			href: '/',
+			href: '/movie',
 			iconName: 'lucide:clapperboard',
 			name: 'Films',
 		},
 		{
-			href: '/',
+			href: '/tv',
 			iconName: 'lucide:tv',
 			name: 'Séries',
 		},
 	];
+
+	const { width } = useWindowSize();
+	const isMobile = ref(false);
+
+	watchEffect(() => {
+		if (width.value < 700) {
+			isMobile.value = true;
+		} else {
+			isMobile.value = false;
+		}
+	});
 </script>
 
 <template>
 	<div class="default-template">
-		<div class="header__shadow"></div>
-		<header class="header">
-			<h1 class="logo">
-				<NuxtImg class="icon" src="/popcorn.png" />
+		<div v-if="!isMobile" class="header__shadow"></div>
+		<header v-if="!isMobile" class="header">
+			<NuxtLink to="/">
+				<h1 class="logo">
+					<NuxtImg class="icon" src="/popcorn.png" />
 
-				Cinemotion
-			</h1>
+					Cinemotion
+				</h1>
+			</NuxtLink>
 
 			<nav class="nav">
-				<NuxtLink class="nav__link" to="/" v-for="link in links">
-					<!-- <Icon :name="link.iconName" /> -->
-
+				<NuxtLink
+					class="nav__link"
+					:to="`${link.href}`"
+					v-for="link in links"
+				>
 					{{ link.name }}
 				</NuxtLink>
 			</nav>
@@ -45,6 +55,18 @@
 		<main>
 			<slot />
 		</main>
+
+		<nav v-if="isMobile" class="tab-bar">
+			<NuxtLink
+				class="tab-bar__link"
+				:to="link.href"
+				v-for="link in links"
+			>
+				<Icon :name="link.iconName" />
+
+				{{ link.name }}
+			</NuxtLink>
+		</nav>
 
 		<footer class="infos">
 			<div class="column">
@@ -97,7 +119,7 @@
 			width: 200%;
 			height: 300px;
 			background: #000000;
-			box-shadow: 0 150px 200px #000000;
+			box-shadow: 0 130px 200px #000000;
 		}
 
 		z-index: 1000;
@@ -112,9 +134,6 @@
 
 		width: 100%;
 		padding: 30px 50px;
-
-		// background: #00000010;
-		// backdrop-filter: blur(40px);
 		font-size: 1.6rem;
 
 		.logo {
@@ -154,6 +173,30 @@
 		min-height: 100vh;
 	}
 
+	.tab-bar {
+		z-index: 10000;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+
+		display: flex;
+		justify-content: space-between;
+
+		width: 100%;
+		padding: 20px 30px;
+
+		background: $bg;
+		border-top: solid 1px $strokes;
+
+		&__link {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
 	footer {
 		display: flex;
 		gap: 60px;
@@ -172,6 +215,10 @@
 
 		.icon {
 			height: 10px;
+		}
+
+		@media screen and (max-width: 700px) {
+			padding-bottom: 150px;
 		}
 	}
 </style>
