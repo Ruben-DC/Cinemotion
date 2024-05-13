@@ -1,4 +1,4 @@
-import { RawDatas, Movie, TV } from '~/types';
+import { RawDatas, Movie, TV, MediaInfos } from '~/types';
 import { formatMedias } from '~/utils/format';
 import { fetchWithAuth } from '~/utils/fetch';
 
@@ -32,5 +32,5 @@ export default defineEventHandler(async (event) => {
 	const discover = formatMedias(randomMedia);
 	discover.mediaType = mediaType;
 
-	return discover;
+	return discover as MediaInfos;
 });
