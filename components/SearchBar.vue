@@ -1,4 +1,8 @@
 <script setup lang="ts">
+	const props = defineProps<{
+		category: 'all' | 'tv' | 'movie';
+	}>();
+
 	const searchPlaceholder = ref<'un film' | 'une série'>('une série');
 
 	onMounted(() => {
@@ -10,6 +14,26 @@
 			}
 		}, 2000);
 	});
+
+	const query = ref('');
+
+	const search = async (mediaType: string, query: string) => {
+		if (mediaType === 'all') {
+			const movies = await $fetch(`/api/tmdb/search/movie?${query}`);
+
+			const tvs = await $fetch(`/api/tmdb/search/tv?${query}`);
+
+			const results = [];
+			results.push(movies, tvs);
+			console.log(results);
+
+			return results;
+		} else {
+			const data = await $fetch(`/api/tmdb/search/${mediaType}?${query}`);
+
+			return data;
+		}
+	};
 </script>
 
 <template>
@@ -18,6 +42,8 @@
 			class="search__input"
 			type="search"
 			:placeholder="`Chercher ${searchPlaceholder}`"
+			v-model="query"
+			@input="search(category, query)"
 		/>
 	</div>
 </template>
