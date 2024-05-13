@@ -1,21 +1,19 @@
 <script setup lang="ts">
-	import type { MediaInfos } from '~/types';
-
-	const { data: discover }: { data: Ref<MediaInfos> } = await useFetch(
+	const { data: discover, pending: pendingDiscover } = await useFetch(
 		'/api/tmdb/discover',
 		{
 			lazy: true,
 		}
 	);
 
-	const { data: movies }: { data: Ref<MediaInfos[]> } = await useFetch(
+	const { data: movies, pending: pendingMovies } = await useFetch(
 		'/api/tmdb/movie/list/intheatres',
 		{
 			lazy: true,
 		}
 	);
 
-	const { data: tvs }: { data: Ref<MediaInfos[]> } = await useFetch(
+	const { data: tvs, pending: pendingTvs } = await useFetch(
 		'/api/tmdb/tv/list/airing',
 		{
 			lazy: true,
@@ -24,19 +22,19 @@
 </script>
 
 <template>
-	<div class="discover">
+	<div v-if="pendingDiscover">pending...</div>
+	<div v-else class="discover">
 		<div
-			v-if="discover?.backdrop_path"
-			:style="`background: url(${$config.public.imageBaseUrl}/${discover.backdrop_path}); 
+			:style="`background: url(${$config.public.imageBaseUrl}/${discover?.backdrop_path});
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-position: center;`"
 			class="discover__image"
 		></div>
 
-		<NuxtLink :to="`/${discover?.mediaType}/${discover.id}`">
+		<NuxtLink :to="`/${discover?.mediaType}/${discover?.id}`">
 			<h1 class="discover__title">
-				{{ discover.title }}
+				{{ discover?.title }}
 
 				<Icon class="discover__title__icon" name="lucide:info" />
 			</h1>
@@ -49,20 +47,24 @@
 		<div class="suggestions">
 			<div class="suggestions__category">
 				<div class="suggestions__category__header">
-					<h2 class="name">
-						<!-- <Icon name="lucide:clapperboard" /> -->
-						Films
-					</h2>
+					<h2 class="name">Films</h2>
 
 					<hr class="divider" />
 
-					<NuxtLink to="/" class="link">voir plus</NuxtLink>
+					<NuxtLink to="/movie" class="link">voir plus</NuxtLink>
 				</div>
 
 				<ul class="suggestions__list">
+					<Placeholder
+						:width="150"
+						:height="200"
+						v-if="pendingMovies"
+						v-for="i in 10"
+					/>
+
 					<li
-						v-if="movies"
-						v-for="movie in movies.slice(0, 10)"
+						v-else
+						v-for="movie in movies?.results.slice(0, 10)"
 						:key="movie.id"
 					>
 						<NuxtLink :to="`/movie/${movie.id}`">
@@ -74,18 +76,22 @@
 
 			<div class="suggestions__category">
 				<div class="suggestions__category__header">
-					<h2 class="name">
-						<!-- <Icon name="lucide:tv" />  -->
-						Séries
-					</h2>
+					<h2 class="name">Séries</h2>
 
 					<hr class="divider" />
 
-					<NuxtLink to="/" class="link">voir plus</NuxtLink>
+					<NuxtLink to="/tv" class="link">voir plus</NuxtLink>
 				</div>
 
 				<ul class="suggestions__list">
-					<li v-if="tvs" v-for="tv in tvs.slice(0, 10)" :key="tv.id">
+					<Placeholder
+						:width="150"
+						:height="200"
+						v-if="pendingTvs"
+						v-for="i in 10"
+					/>
+
+					<li v-else v-for="tv in tvs?.slice(0, 10)" :key="tv.id">
 						<NuxtLink :to="`/tv/${tv.id}`">
 							<MediaCard :media="tv" />
 						</NuxtLink>
@@ -101,13 +107,17 @@
 		position: relative;
 
 		width: 100%;
-		height: 100vh;
+		height: 100dvh;
+
+		@media screen and (max-width: 700px) {
+			height: calc(100dvh - 50px);
+		}
 
 		&__image {
 			width: 100%;
 			height: 100%;
 
-			box-shadow: inset 0 -450px 170px -200px #000000;
+			box-shadow: inset 0 -450px 600px -200px #000000;
 		}
 
 		&__backdrop {
@@ -131,9 +141,10 @@
 			font-size: 4.8rem;
 
 			&__icon {
-				position: relative;
+				position: absolute;
 				top: 0px;
-				right: 0px;
+				left: 0px;
+				transform: translateX(-70%);
 
 				height: 1.5rem;
 				margin-bottom: 15px;
@@ -145,7 +156,7 @@
 		position: relative;
 
 		width: 100%;
-		max-width: 920px;
+		max-width: 910px;
 		padding: 0 5px;
 
 		.search-bar {
@@ -153,58 +164,8 @@
 			top: 0;
 			left: 50%;
 			transform: translateX(-50%);
-		}
-	}
 
-	.suggestions {
-		display: flex;
-		flex-direction: column;
-		gap: 50px;
-
-		width: 100%;
-		margin-top: 150px;
-
-		&__category {
-			display: flex;
-			flex-direction: column;
-			gap: 30px;
-
-			&__header {
-				display: flex;
-				gap: 30px;
-				align-items: center;
-				justify-content: space-between;
-
-				.name {
-					display: flex;
-					align-items: center;
-					gap: 10px;
-
-					font-size: 2.2rem;
-					font-weight: 400;
-				}
-
-				.divider {
-					display: block;
-					width: 100%;
-					height: 1px;
-					border: none;
-					background: $strokes;
-				}
-
-				.link {
-					font-size: 1.4rem;
-					text-wrap: nowrap;
-				}
-			}
-		}
-
-		&__list {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-			gap: 30px;
-
-			width: 100%;
+			padding: 0 5px;
 		}
 	}
 </style>
