@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="content">
-		<SearchBar class="search-bar" />
+		<!-- <SearchBar class="search-bar" category="all" /> -->
 
 		<div class="suggestions">
 			<div class="suggestions__category">
