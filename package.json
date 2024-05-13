@@ -12,11 +12,15 @@
   "dependencies": {
     "@nuxt/image": "^1.6.0",
     "@nuxtjs/google-fonts": "^3.2.0",
-    "@vueuse/nuxt": "^10.9.0",
     "nuxt": "^3.11.2",
     "nuxt-icon": "^0.6.10",
     "sass": "^1.75.0",
+    "vanilla-tilt": "^1.8.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@vueuse/core": "^10.9.0",
+    "@vueuse/nuxt": "^10.9.0"
   }
 }
