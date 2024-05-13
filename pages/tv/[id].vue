@@ -100,8 +100,6 @@
 				<h2 class="name">Recommandations</h2>
 
 				<hr class="divider" />
-
-				<NuxtLink to="/" class="link">voir plus</NuxtLink>
 			</div>
 
 			<ul class="suggestions__list">
@@ -126,8 +124,6 @@
 				<h2 class="name">Similaires</h2>
 
 				<hr class="divider" />
-
-				<NuxtLink to="/" class="link">voir plus</NuxtLink>
 			</div>
 			<ul class="suggestions__list">
 				<Placeholder
