@@ -5,6 +5,7 @@ export type RawDatas = {
 	results: Movie[] | TV[];
 	total_pages: number;
 	total_results: number;
+	mediaType?: 'tvs' | 'movies';
 };
 
 export type MovieDetails = {
