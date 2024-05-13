@@ -98,8 +98,6 @@
 				<h2 class="name">Recommandations</h2>
 
 				<hr class="divider" />
-
-				<NuxtLink to="/" class="link">voir plus</NuxtLink>
 			</div>
 
 			<ul class="suggestions__list">
@@ -108,6 +106,7 @@
 					:height="200"
 					v-if="pendingRecos"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
@@ -127,8 +126,6 @@
 				<h2 class="name">Similaires</h2>
 
 				<hr class="divider" />
-
-				<NuxtLink to="/" class="link">voir plus</NuxtLink>
 			</div>
 			<ul class="suggestions__list">
 				<Placeholder
@@ -136,6 +133,7 @@
 					:height="200"
 					v-if="pendingSimilars"
 					v-for="i in 10"
+					:key="i"
 				/>
 
 				<li
