@@ -2,7 +2,9 @@
 export default defineNuxtConfig({
 	routeRules: {
 		'/': { prerender: true },
-		'/api/**': { cache: { maxAge: 60 * 60 } },
+		'/api/tmdb/discover': { cache: { maxAge: 60 * 60 } },
+		// '/api/tmdb/movie': { cache: { maxAge: 60 * 60 } },
+		// '/api/tmdb/tv': { cache: { maxAge: 60 * 60 } },
 	},
 
 	runtimeConfig: {
@@ -14,7 +16,7 @@ export default defineNuxtConfig({
 		},
 	},
 
-	devtools: { enabled: true },
+	devtools: { enabled: false },
 
 	app: {
 		head: {
