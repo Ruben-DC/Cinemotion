@@ -3,9 +3,10 @@
 	const movieList = route.params.list[1];
 
 	const { data, pending, refresh } = await useFetch(
-		`/api/tmdb/movie/list/${movieList}?page=${route.query.page}`,
+		`/api/tmdb/movie/list/${movieList}`,
 		{
 			lazy: true,
+			query: { page: route.query.page },
 		}
 	);
 
@@ -14,12 +15,16 @@
 	switch (movieList) {
 		case 'intheatres':
 			pageName.value = 'En salles';
+			break;
 		case 'popular':
 			pageName.value = 'Populaires';
+			break;
 		case 'top':
 			pageName.value = 'Les mieux notés';
+			break;
 		case 'upcoming':
 			pageName.value = 'À venir';
+			break;
 	}
 </script>
 
@@ -31,8 +36,6 @@
 		</NuxtLink>
 
 		<h2 class="page-title">{{ pageName }}</h2>
-
-		<SearchBar />
 	</div>
 
 	<div class="suggestions">
@@ -54,6 +57,7 @@
 					:height="200"
 					v-if="pending"
 					v-for="i in 20"
+					:key="i"
 				/>
 
 				<li v-else v-for="media in data?.results" :key="media.id">
@@ -63,6 +67,11 @@
 				</li>
 			</ul>
 		</div>
+
+		<!-- <Pagination
+			:page-max="data?.total_pages"
+			@page-change="refreshDatas"
+		/> -->
 	</div>
 </template>
 
