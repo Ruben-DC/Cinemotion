@@ -1,6 +1,6 @@
 # Setup du projet
 
-Pour commencer, il faut configurer les variables d'environnements suivantes dans le fichier .env :
+Pour commencer, l'application utilise l'API TMDB. Il faut donc configurer les variables d'environnements suivantes dans le fichier .env :
 
 ```bash
 # url de l'api
