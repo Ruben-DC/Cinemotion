@@ -13,7 +13,7 @@ IMAGE_BASE_URL=https://image.tmdb.org/t/p/original
 TMDB_API_KEY=
 ```
 
-# Suivre la configuration recommandée par Nuxt :
+# Suivre la configuration recommandée par Nuxt
 
 ## Nuxt 3 Minimal Starter
 
