@@ -55,4 +55,14 @@ export default defineNuxtConfig({
 	},
 
 	css: ['@/assets/styles/index.scss'],
+
+	nitro: {
+    		experimental: {
+      			openAPI: true
+    		}
+  	},
+
+	hub: {
+		cache: true
+	}
 });
