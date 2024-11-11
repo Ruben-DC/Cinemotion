@@ -26,11 +26,12 @@ export default defineNuxtConfig({
 	},
 
 	modules: [
-		'@nuxt/image',
-		'@vueuse/nuxt',
-		'nuxt-icon',
-		'@nuxtjs/google-fonts',
-	],
+        '@nuxt/image',
+        '@vueuse/nuxt',
+        'nuxt-icon',
+        '@nuxtjs/google-fonts',
+        "@nuxthub/core"
+    ],
 
 	image: {
 		format: ['webp'],
