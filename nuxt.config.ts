@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	routeRules: {
-		'/': { prerender: true },
+		// '/': { prerender: true },
 		'/api/tmdb/discover': { cache: { maxAge: 60 * 60 } },
 		// '/api/tmdb/movie': { cache: { maxAge: 60 * 60 } },
 		// '/api/tmdb/tv': { cache: { maxAge: 60 * 60 } },
