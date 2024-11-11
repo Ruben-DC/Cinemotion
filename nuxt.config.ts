@@ -55,4 +55,10 @@ export default defineNuxtConfig({
 	},
 
 	css: ['@/assets/styles/index.scss'],
+	
+	nitro: {
+    		externals: {
+      			inline: ['@unhead/vue']
+    		}
+  	}
 });
